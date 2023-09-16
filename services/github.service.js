@@ -89,7 +89,7 @@ module.exports = {
                 const Package = {
                     name,
                     namespace: pkg.namespace,
-                    version: package_version.version,
+                    version: package_version.version.split(':')[1],
                     url: package_version.package_url,
                     branch: package_version.target_commitish,
                     repository: repository.full_name,
