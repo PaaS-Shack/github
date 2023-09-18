@@ -56,7 +56,30 @@ module.exports = {
                 if (payload.registry_package) {
                     await this.processPackagePublish(ctx, payload);
                 } else {
-                    this.logger.info(`unhandled webhook: ${payload.action} keys: ${Object.keys(payload)}`);
+
+
+                    let action = payload.action;
+
+                    if (!action) {
+                        if (payload.forkee) {
+                            action = 'forked';
+                        } else if (payload.ref) {
+                            action = 'pushed';
+                        } else if (payload.release) {
+                            action = 'released';
+                        } else if (payload.pull_request) {
+                            action = 'pull_request';
+                        } else if (payload.issue) {
+                            action = 'issue';
+                        } else if (payload.pages) {
+                            action = 'pages';
+                        } else {
+                            action = 'unknown';
+                        }
+                    }
+                    ctx.emit(`github.actions.${action}`, payload);
+
+                    this.logger.info(`unhandled webhook: ${action} keys: ${Object.keys(payload)}`);
                 }
 
             }
