@@ -119,8 +119,10 @@ module.exports = {
                     registry: "ghcr.io"
                 }
 
-                if (package_version.package_url == `${Package.registry}/${Package.namespace}/${Package.name}:${Package.branch}`) {
+                const url = `${Package.registry}/${Package.namespace}/${Package.name}:${Package.branch}`.toLowerCase()
 
+
+                if (package_version.package_url.toLowerCase() == url) {
                     this.logger.info(`package url: ${package_version.package_url}`);
                     console.log(Package)
                     ctx.emit(`github.package.published`, Package);
@@ -130,7 +132,50 @@ module.exports = {
                 }
             }
         },
+        /**
+            * Handle different types of GitHub events and compact the payload
+            * 
+            * @param {string} action - The GitHub action type (e.g., pull_request, release, etc.)
+            * @param {Object} payload - The GitHub webhook payload
+            */
+        handleGitHubEvent(action, payload) {
+            let compactedPayload = {};
 
+            if (action === 'pull_request') {
+                compactedPayload = {
+                    action,
+                    pull_request: {
+                        title: payload.pull_request.title,
+                        url: payload.pull_request.url,
+                        html_url: payload.pull_request.html_url,
+                        state: payload.pull_request.state,
+                        merged: payload.pull_request.merged,
+                        draft: payload.pull_request.draft,
+                        head: payload.pull_request.head,
+                        base: payload.pull_request.base,
+                        body: payload.pull_request.body,
+                    }
+                };
+            } else if (action === 'release') {
+                compactedPayload = {
+                    action,
+                    release: {
+                        name: payload.release.name,
+                        tag_name: payload.release.tag_name,
+                        repository: payload.repository.full_name,
+                        url: payload.release.url,
+                        html_url: payload.release.html_url,
+                        assets: payload.release.assets,
+                        body: payload.release.body,
+                        draft: payload.release.draft,
+                    }
+                };
+            }
+            // Add more conditions for other actions as needed...
+
+            // Emit the compacted payload
+            this.ctx.emit(`github.actions.${action}`, compactedPayload);
+        }
     },
 
     /**
