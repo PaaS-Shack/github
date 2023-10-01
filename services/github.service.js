@@ -12,7 +12,9 @@ module.exports = {
     version: 1,
 
     mixins: [
-        ConfigLoader(['github.**']),
+        ConfigLoader([
+            'github.**'
+        ]),
     ],
 
     /**
@@ -57,7 +59,6 @@ module.exports = {
                     await this.processPackagePublish(ctx, payload);
                 } else {
 
-
                     let action = payload.action;
 
                     if (!action) {
@@ -81,10 +82,8 @@ module.exports = {
 
                     this.logger.info(`unhandled webhook: ${action} keys: ${Object.keys(payload)}`);
                 }
-
             }
         },
-
     },
 
     /**
@@ -117,10 +116,9 @@ module.exports = {
                     branch: package_version.target_commitish,
                     repository: repository.full_name,
                     registry: "ghcr.io"
-                }
+                };
 
                 const url = `${Package.registry}/${Package.namespace}/${Package.name}:${Package.branch}`.toLowerCase()
-
 
                 if (package_version.package_url.toLowerCase() == url) {
                     this.logger.info(`package url: ${package_version.package_url}`);
@@ -128,7 +126,6 @@ module.exports = {
                     ctx.emit(`github.package.published`, Package);
                 } else {
                     this.logger.info(`package url not found`);
-
                 }
             }
         },
