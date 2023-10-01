@@ -315,23 +315,34 @@ module.exports = {
       const keys = Object.keys(payload);
 
       const action = this.getActionName(payload);
-      // loop over payload keys
-      for (const key of keys) {
 
-        this.logger.info(`action ${action} ${key}`)
-        if (key == 'action') {
-          events.push({
-            key: key,
-            action: action,
-            payload: this.compactActionPayload(payload[key])
-          });
-        } else if (key == 'workflow_run') {
-          events.push({
-            key: key,
-            action: action,
-            payload: this.compactWorkflowRunPayload(payload[key])
-          });
-        }
+      if (actions == 'synchronize') {
+        events.push({
+          key: 'pull_request',
+          action: action,
+          payload: payload.pull_request
+        });
+        return events;
+      }
+
+      // if first key is action pick second key as object
+      if (keys[0] == 'action') {
+        const object = keys[1];
+        const objectPayload = payload[object];
+        events.push({
+          key: object,
+          action: action,
+          payload: objectPayload
+        });
+      } else {
+        // if first key is not action pick first key as object
+        const object = keys[0];
+        const objectPayload = payload[object];
+        events.push({
+          key: object,
+          action: action,
+          payload: objectPayload
+        });
       }
 
       return events;
