@@ -313,9 +313,10 @@ module.exports = {
       const events = [];
 
       const action = this.getActionName(payload);
-
       // loop over payload keys
       for (const key in payload) {
+
+        this.logger.info(`action ${action} ${key}`)
         switch (key) {
           case 'deployment_status':
             compactedPayload.push({
