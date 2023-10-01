@@ -312,9 +312,11 @@ module.exports = {
     compactPayload(payload) {
       const events = [];
 
+      const keys = Object.keys(payload);
+
       const action = this.getActionName(payload);
       // loop over payload keys
-      for (const key in payload) {
+      for (const key of keys) {
 
         this.logger.info(`action ${action} ${key}`)
         if (key == 'action') {
