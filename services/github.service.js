@@ -317,10 +317,10 @@ module.exports = {
       const events = [];
 
       const keys = Object.keys(payload);
-
+      console.log(keys)
       const action = this.getActionName(payload);
 
-      if (actions == 'synchronize') {
+      if (action == 'synchronize') {
         events.push({
           key: 'pull_request',
           action: action,
@@ -364,7 +364,7 @@ module.exports = {
       let actionName = '';
 
       if (!action) {
-        actionsName = 'unknown';
+        actionName = 'unknown';
       } else {
         actionName = action
       }
