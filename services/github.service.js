@@ -317,61 +317,18 @@ module.exports = {
       for (const key in payload) {
 
         this.logger.info(`action ${action} ${key}`)
-        switch (key) {
-          case 'deployment_status':
-            compactedPayload.push({
-              key,
-              action,
-              payload: this.compactDeploymentStatusPayload(payload[key])
-            });
-            break;
-          case 'deployment':
-            compactedPayload.push({
-              key,
-              action,
-              payload: this.compactDeploymentPayload(payload[key])
-            });
-            break;
-          case 'check_run':
-            compactedPayload.push({
-              key,
-              action,
-              payload: this.compactCheckRunPayload(payload[key])
-            });
-            break;
-          case 'workflow':
-            compactedPayload.push({
-              key,
-              action,
-              payload: this.compactWorkflowPayload(payload[key])
-            });
-            break;
-          case 'workflow_run':
-            compactedPayload.push({
-              key,
-              action,
-              payload: this.compactWorkflowRunPayload(payload[key])
-            });
-            break;
-          case 'action':
-            compactedPayload.push({
-              key,
-              action,
-              payload: this.compactActionPayload(payload[key])
-            });
-            break;
-          case 'head_repository':
-            compactedPayload.push({
-              key,
-              action,
-              payload: this.compactRepositoryPayload(payload[key])
-            });
-            break;
-          case 'repository':
-          case 'organization':
-          case 'sender':
-          default:
-            break;
+        if (key == 'action') {
+          events.push({
+            key: key,
+            action: action,
+            payload: this.compactActionPayload(payload[key])
+          });
+        } else if (key == 'workflow_run') {
+          events.push({
+            key: key,
+            action: action,
+            payload: this.compactWorkflowRunPayload(payload[key])
+          });
         }
       }
 
