@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "config-mixin": "git+https://github.com/PaaS-Shack/config-mixin.git",
+    "flat": "^6.0.1",
     "middlewares": "git+https://github.com/PaaS-Shack/middlewares.git",
     "moleculer": "^0.14.26",
     "nats": "^2.7.1"
