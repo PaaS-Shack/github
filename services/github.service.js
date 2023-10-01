@@ -59,6 +59,10 @@ module.exports = {
         // payload events
         const events = this.compactPayload(payload);
 
+        if (events.length == 0) {
+          console.log(payload)
+          return;
+        }
         // loop over events
         for (const event of events) {
           // emit event
