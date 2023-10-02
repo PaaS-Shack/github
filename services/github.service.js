@@ -268,10 +268,10 @@ module.exports = {
       if (key == 'package') {
         strippedPayload = {
           name: payload.repository.name.toLowerCase(),
-          namespace: payload.repository.owner.name.toLowerCase(),
+          namespace: payload.repository.owner.login.toLowerCase(),
           branch: payload.package.package_version.target_commitish,
           version: payload.package.package_version.version,
-          url: payload.package.package_version.metadata.package_url,
+          url: payload.package.package_version.package_url,
         };
       } else if (key == 'commit') {
         strippedPayload = {
