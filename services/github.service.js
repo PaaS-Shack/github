@@ -267,15 +267,16 @@ module.exports = {
 
       if (key == 'package') {
         strippedPayload = {
-          name: payload.package.name,
-          namespace: payload.package.namespace,
+          name: payload.repository.name.toLowerCase(),
+          namespace: payload.repository.owner.name.toLowerCase(),
           branch: payload.package.package_version.target_commitish,
           version: payload.package.package_version.version,
+          url: payload.package.package_version.metadata.package_url,
         };
       } else if (key == 'commit') {
         strippedPayload = {
-          name: payload.repository.name,
-          namespace: payload.repository.owner.name,
+          name: payload.repository.name.toLowerCase(),
+          namespace: payload.repository.owner.name.toLowerCase(),
           branch: payload.ref.split('/').pop(),
           ref: payload.ref,
           commits: payload.commits,
