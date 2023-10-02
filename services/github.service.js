@@ -281,7 +281,7 @@ module.exports = {
           ref: payload.ref,
           commits: payload.commits,
           head: payload.head_commit
-        }
+        };
       }
 
       return {
@@ -290,30 +290,6 @@ module.exports = {
         payload: strippedPayload
       };
     },
-
-    /**
-     * deep walk payload adn strip any keys that include "_url"
-     * 
-     * @param {Object} payload - github webhook payload
-     * 
-     * @returns {Object} stripped payload
-     */
-    stripUrls(payload = {}) {
-      const strippedPayload = {};
-
-      const flattened = flatten(payload);
-
-      const keys = Object.keys(flattened);
-
-      keys.forEach(key => {
-        if (!key.includes('_url')) {
-          strippedPayload[key] = flattened[key];
-        }
-      });
-
-      return unflatten(strippedPayload);
-    },
-
 
     /**
      * get event key
@@ -353,7 +329,7 @@ module.exports = {
       if (!action) {
         actionName = 'unknown';
       } else {
-        actionName = action
+        actionName = action;
       }
 
       if (actionName == 'unknown') {
