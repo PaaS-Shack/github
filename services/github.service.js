@@ -107,7 +107,8 @@ module.exports = {
       let strippedPayload = false;
 
       if (key == 'package') {
-        const tag = payload.package_version.container_metadata.tag.name;
+        
+        const tag = payload.package.package_version.container_metadata.tag.name;
         strippedPayload = {
           name: payload.repository.name.toLowerCase(),
           namespace: payload.repository.owner.login.toLowerCase(),
