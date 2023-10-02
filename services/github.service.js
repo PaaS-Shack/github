@@ -107,10 +107,11 @@ module.exports = {
       let strippedPayload = false;
 
       if (key == 'package') {
+        const tag = payload.package_version.container_metadata.tag.name;
         strippedPayload = {
           name: payload.repository.name.toLowerCase(),
           namespace: payload.repository.owner.login.toLowerCase(),
-          branch: payload.package.package_version.target_commitish,
+          branch: tag == '' ? payload.package.package_version.target_commitish : tag,
           sha256: payload.package.package_version.version.split(':').pop(),
           url: payload.package.package_version.package_url,
         };
