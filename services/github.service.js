@@ -241,7 +241,6 @@ module.exports = {
     },
   },
 
-  
   /**
    * Methods
    */
