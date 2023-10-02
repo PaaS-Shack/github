@@ -218,11 +218,12 @@ module.exports = {
         const event = this.compactPayload(payload);
 
         if (event.payload == false) {
+          this.logger.info(`not found github.${event.key}.${event.action}`, event.payload);
           return;
         }
 
         ctx.emit(`github.${event.key}.${event.action}`, event.payload);
-        this.logger.info(`github.${event.key}.${event.action}`, event.payload);
+        this.logger.info(`github.${event.key}.${event.action}`);
 
       }
     },
