@@ -233,7 +233,12 @@ module.exports = {
    * Events
    */
   events: {
-
+    /**
+     * github.package.published
+     */
+    'github.package.published'(payload) {
+      this.logger.info('github.package.published', payload);
+    },
   },
 
   /**
