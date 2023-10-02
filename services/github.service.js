@@ -283,9 +283,10 @@ module.exports = {
           head: payload.head_commit
         };
       } else if (payload.repository) {
+        const [owner, repo] = payload.repository.full_name.split('/');
         strippedPayload = {
-          name: payload.repository.name.toLowerCase(),
-          namespace: payload.repository.owner.name.toLowerCase(),
+          name: repo.toLowerCase(),
+          namespace: owner.toLowerCase(),
         };
       }
       return {
