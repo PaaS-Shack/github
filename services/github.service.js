@@ -245,8 +245,6 @@ module.exports = {
    * Methods
    */
   methods: {
-
-
     /**
      * payload to events
      * 
