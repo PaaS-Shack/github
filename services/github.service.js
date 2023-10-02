@@ -282,8 +282,12 @@ module.exports = {
           commits: payload.commits,
           head: payload.head_commit
         };
+      } else if (payload.repository) {
+        strippedPayload = {
+          name: payload.repository.name.toLowerCase(),
+          namespace: payload.repository.owner.name.toLowerCase(),
+        };
       }
-
       return {
         action: action,
         key: key,
