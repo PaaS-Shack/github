@@ -264,7 +264,8 @@ module.exports = {
           name: payload.package.name,
           namespace: payload.package.namespace,
           branch: payload.package.package_version.target_commitish,
-          version: payload.package.package_version.version,
+          sha256: payload.package.package_version.version.split(':').pop(),
+          url: payload.package.package_version.package_url,
         };
       } else if (key == 'commit') {
         strippedPayload = {
