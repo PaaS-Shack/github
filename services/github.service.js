@@ -7,7 +7,7 @@ const { MoleculerClientError } = require("moleculer").Errors;
  * this service manages the github api and webhooks
  * 
  * webhocks used to update paas-shack deployments
- *  deployment_status,deployment,check_run,workflow,workflow_run,action,repository,organization,sender
+ * deployment_status,deployment,check_run,workflow,workflow_run,action,repository,organization,sender
  */
 module.exports = {
   name: "github",
